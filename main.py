@@ -13,7 +13,7 @@ class App(Frame):
         self.master.title("Particules")
         self.master.resizable(width=False, height=False)
 
-        canvas = Canvas(self.master, width=800, height=800, bg="black")
+        canvas = Canvas(self.master, width=1920, height=1080, bg="black")
         canvas.grid()
 
         self.setup(canvas)
@@ -25,12 +25,12 @@ class App(Frame):
         self.update(canvas)
 
     def update(self, canvas):
-        canvas.particles.append(Particle(canvas, random.randrange(800), random.randrange(-10, 10), 3, random.randrange(70,100)/50))
+        canvas.particles.append(Particle(canvas, random.randrange(1920), random.randrange(-10, 10), 3, random.randrange(70,100)/50))
         canvas.tick = canvas.tick + 1
         canvas.delete(ALL)
         for particle in canvas.particles:
             particle.draw()
-            if particle.y > 800:
+            if particle.y > 1080:
                 canvas.particles.remove(particle)
 
         self.after(1, lambda: self.update(canvas))
