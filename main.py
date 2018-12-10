@@ -25,7 +25,7 @@ class App(Frame):
         self.update(canvas)
 
     def update(self, canvas):
-        canvas.particles.append(Particle(canvas, random.randrange(800), random.randrange(-10, 10), 3, random.randrange(70,100)/100))
+        canvas.particles.append(Particle(canvas, random.randrange(800), random.randrange(-10, 10), 3, random.randrange(70,100)/50))
         canvas.tick = canvas.tick + 1
         canvas.delete(ALL)
         for particle in canvas.particles:
