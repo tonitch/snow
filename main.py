@@ -25,7 +25,11 @@ class App(Frame):
         self.update(canvas)
 
     def update(self, canvas):
-        canvas.particles.append(Particle(canvas, random.randrange(1920), random.randrange(-10, 10), 3, random.randrange(70,100)/50))
+        canvas.particles.append(
+            Particle(
+                canvas, random.randrange(1920),
+                random.randrange(-10, 10),
+                random.randrange(70, 100) / 50))
         canvas.tick = canvas.tick + 1
         canvas.delete(ALL)
         for particle in canvas.particles:
@@ -37,12 +41,12 @@ class App(Frame):
 
 
 class Particle():
-    def __init__(self, canvas, x, y, size, speed):
+    def __init__(self, canvas, x, y, speed):
         self.canvas = canvas
         self.x = x
         self.y = y
-        self.size = size
         self.speed = speed
+        self.size = map(self.speed, 70/50, 100/50, 1, 10)
 
     def draw(self):
         self.particle = self.canvas.create_oval(
@@ -52,6 +56,11 @@ class Particle():
             self.y+self.size,
             fill="white")
         self.y = self.y + 1 * self.speed
+
+
+def map(n, start1, stop1, start2, stop2):
+    newval = (n - start1) / (stop1 - start1) * (stop2 - start2) + start2
+    return newval
 
 
 if __name__ == "__main__":
