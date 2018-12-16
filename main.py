@@ -10,31 +10,32 @@ class App(Frame):
         self.mainloop()
 
     def main(self):
+        self.Wscreen = self.master.winfo_screenwidth()
+        self.Hscreen = self.master.winfo_screenheight()
         self.master.title("Particules")
         self.master.resizable(width=False, height=False)
+        self.master.bind("<Escape>", lambda e: e.widget.quit())
 
-        canvas = Canvas(self.master, width=1920, height=1080, bg="black")
+        canvas = Canvas(self.master, width=self.Wscreen, height=self.Hscreen, bg="black")
         canvas.grid()
 
         self.setup(canvas)
 
     def setup(self, canvas):
         canvas.particles = []
-        canvas.tick = 0
 
         self.update(canvas)
 
     def update(self, canvas):
         canvas.particles.append(
             Particle(
-                canvas, random.randrange(1920),
-                random.randrange(-10, 10),
+                canvas, random.randrange(self.Wscreen),
+                -10,
                 random.randrange(70, 100) / 50))
-        canvas.tick = canvas.tick + 1
         canvas.delete(ALL)
         for particle in canvas.particles:
             particle.draw()
-            if particle.y > 1080:
+            if particle.y > self.Hscreen:
                 canvas.particles.remove(particle)
 
         self.after(1, lambda: self.update(canvas))
@@ -46,7 +47,7 @@ class Particle():
         self.x = x
         self.y = y
         self.speed = speed
-        self.size = map(self.speed, 70/50, 100/50, 1, 10)
+        self.size = map(self.speed, 70/50, 100/50, 1, 7)
 
     def draw(self):
         self.particle = self.canvas.create_oval(
